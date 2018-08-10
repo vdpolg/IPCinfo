@@ -7,6 +7,6 @@ Dat=$(date +%Y%m%d-%H%M)
 #log名稱
 LogName=IPC-$Dat.log
 #執行
-cd $ConfFolder
-./IPC_conf > $LogName
+#cd $ConfFolder
+./IPC_conf 1> $LogName 2> IPCerror.log
 
