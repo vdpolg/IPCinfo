@@ -7,7 +7,7 @@
 #               v0.2    20180321        arthur_lai      改為2個檔，run 和conf設定檔
 #               v0.3    20180323        arthur_lai      SSHD Check切為2個部份
 # run_IPCinfo   v0.4    20180810        arthur_lai      改檔名方便識別，上傳至git(未來加上color)
-# 待辦：加顏色(含fail後的建議)、首次使用環境建立、防呆、跨平台
+# 待辦：加顏色(含fail後的建議)、首次使用環境建立、防呆(mkdir -p /sources/software)、跨平台
 
 #設定檔路徑
 ConfFolder=/sources/software
