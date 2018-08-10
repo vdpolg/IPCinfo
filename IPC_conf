@@ -1,0 +1,54 @@
+#!/bin/bash
+# IPC裝機檢核 
+# 名稱          版本    日期            作者            備註
+# checkIPC      v0.1    20171212        arthur_lai      初版
+#				v0.2    20180321        arthur_lai      改為2個檔，run 和conf設定檔
+#				v0.3    20180323        arthur_lai      SSHD Check切為2個部份
+# ==== OS version ====
+echo " ==== OS version ==== " 
+uname -a 
+echo " ==== Disk information ==== " 
+echo " == lsblk" 
+lsblk 
+echo " == df -Th" 
+df -Th 
+echo " == cat /proc/mdstat" 
+cat /proc/mdstat  
+
+# SSHD check
+SSHDCip=$(grep "Ciphers" /etc/ssh/sshd_config) 
+SSHDMac=$(grep "MACs" /etc/ssh/sshd_config) 
+SSHDC=$(grep "Ciphers aes128-ctr,aes192-ctr,aes256-ctr" /etc/ssh/sshd_config|wc -l) 
+SSHDM=$(grep "MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config|wc -l) 
+echo " ==== SSHD Ciphers CHECK ==== " 
+if [ $SSHDC == 1 ];then
+echo "SSHD Ciphers Check OK " 
+echo $SSHDCip 
+else
+echo " ==== Check fail, you must do  ==== " 
+echo "echo "Ciphers aes128-ctr,aes192-ctr,aes256-ctr" >> /etc/ssh/sshd_config" 
+fi
+echo " ==== SSHD Macs CHECK ==== " 
+if [ $SSHDM == 1 ];then
+echo "SSHD Macs Check OK " 
+echo $SSHDMac 
+else
+echo " ==== Check fail, you must do  ==== " 
+echo "echo "MACs hmac-sha2-256,hmac-sha2-512" >> /etc/ssh/sshd_config" 
+fi
+
+# CR10S check
+echo " ==== CR10S check ==== " 
+PCSCD=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd)
+PCSCD2=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd|wc -l)
+if [ $PCSCD2 == 1 ] ;then
+echo "Check OK" 
+echo $PCSCD 
+else
+echo "Check Fail" 
+echo $PCSCD 
+echo "you must do" 
+echo "sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd " 
+fi
+
+echo " ==== check finish ==== " 
