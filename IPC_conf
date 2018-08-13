@@ -2,8 +2,10 @@
 COLOR_REST='\e[0m'
 COLOR_GREEN='\e[0;32m';
 COLOR_RED='\e[0;31m';
+COLOR_GRAY='\e[90m';
 GreenOK=`echo -en "${COLOR_GREEN}--> OK${COLOR_REST}"`
 RedFAIL=`echo -en "${COLOR_RED}--> Fail${COLOR_REST}"`
+#https://misc.flogisoft.com/bash/tip_colors_and_formatting
 # ==== OS version ====
 echo " ==== OS version ==== " 
 uname -a 
@@ -22,33 +24,36 @@ SSHDC=$(grep "Ciphers aes128-ctr,aes192-ctr,aes256-ctr" /etc/ssh/sshd_config|wc 
 SSHDM=$(grep "MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config|wc -l) 
 echo " ==== SSHD Ciphers CHECK ==== " 
 if [ $SSHDC == 1 ];then
-echo "SSHD Ciphers Check " $GOK
+echo "SSHD Ciphers Check " $GreenOK
 echo $SSHDCip 
 else
 echo "SSHD Ciphers Check " $RedFAIL "you must do"
-echo "echo \"Ciphers aes128-ctr,aes192-ctr,aes256-ctr\" >> /etc/ssh/sshd_config" 
+
+echo -en "${COLOR_GRAY}echo \"Ciphers aes128-ctr,aes192-ctr,aes256-ctr\" >> /etc/ssh/sshd_config${COLOR_REST}" 
 echo ''
 fi
 if [ $SSHDM == 1 ];then
-echo "SSHD Macs Check" $GOK
+echo "SSHD Macs Check" $GreenOK
 echo $SSHDMac 
 else
 echo "SSHD Macs Check" $RedFAIL "you must do" 
-echo "echo \"MACs hmac-sha2-256,hmac-sha2-512\" >> /etc/ssh/sshd_config" 
+echo -en "${COLOR_GRAY}echo \"MACs hmac-sha2-256,hmac-sha2-512\" >> /etc/ssh/sshd_config${COLOR_REST}" 
 fi
 
 # CR10S check
+echo ""
 echo " ==== CR10S check ==== " 
 PCSCD=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd)
 PCSCD2=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd|wc -l)
 if [ $PCSCD2 == 1 ] ;then
-echo "Check OK" 
+echo "Card Reader" $GreenOK 
 echo $PCSCD 
 else
-echo "Check" $RedFAIL 
+echo "Card Reader" $RedFAIL 
 echo $PCSCD 
 echo "you must do" 
-echo "sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd " 
+echo -en "${COLOR_GRAY}sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd ${COLOR_REST}" 
 fi
 
 echo " ==== check finish ==== " 
+
