@@ -9,8 +9,9 @@ IPC檢核
 20180323            SSHD Check切為2個部份
 20180810            改檔名方便識別，上傳至git(未來加上color)
 20180811            另拉branch,直接在CONSOLE SHOW (含色彩)不再產出檔案
+20180813            you must do 改灰色
 # 待辦：加顏色(含fail後的建議)、首次使用環境建立、防呆(mkdir -p /sources/software)、跨平台
-# color ok -> 綠色 、 fail -> 紅色
+# color ok -> 綠色 、 fail -> 紅色 、 must do -> 灰
 # 不限定folder : IPC_conf 本地執行
 
 # 設定檔路徑

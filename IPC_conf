@@ -29,19 +29,17 @@ echo $SSHDCip
 else
 echo "SSHD Ciphers Check " $RedFAIL "you must do"
 
-echo -en "${COLOR_GRAY}echo \"Ciphers aes128-ctr,aes192-ctr,aes256-ctr\" >> /etc/ssh/sshd_config${COLOR_REST}" 
-echo ''
+echo -e "${COLOR_GRAY}echo \"Ciphers aes128-ctr,aes192-ctr,aes256-ctr\" >> /etc/ssh/sshd_config${COLOR_REST}" 
 fi
 if [ $SSHDM == 1 ];then
 echo "SSHD Macs Check" $GreenOK
 echo $SSHDMac 
 else
 echo "SSHD Macs Check" $RedFAIL "you must do" 
-echo -en "${COLOR_GRAY}echo \"MACs hmac-sha2-256,hmac-sha2-512\" >> /etc/ssh/sshd_config${COLOR_REST}" 
+echo -e "${COLOR_GRAY}echo \"MACs hmac-sha2-256,hmac-sha2-512\" >> /etc/ssh/sshd_config${COLOR_REST}" 
 fi
 
 # CR10S check
-echo ""
 echo " ==== CR10S check ==== " 
 PCSCD=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd)
 PCSCD2=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd|wc -l)
@@ -52,7 +50,7 @@ else
 echo "Card Reader" $RedFAIL 
 echo $PCSCD 
 echo "you must do" 
-echo -en "${COLOR_GRAY}sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd ${COLOR_REST}" 
+echo -e "${COLOR_GRAY}sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd ${COLOR_REST}" 
 fi
 
 echo " ==== check finish ==== " 
