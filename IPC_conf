@@ -1,7 +1,10 @@
 #!/bin/bash
 COLOR_REST='\e[0m'
-COLOR_GREEN='\e[0;32m';
-COLOR_RED='\e[0;31m';
+COLOR_GREEN='\e[32m';
+COLOR_RED='\e[31m';
+COLOR_GRAY='\e[90m';
+COLOR_YELLOW='\e[33m';
+GrayDo=`echo -en "${COLOR_GRAY}You must do${COLOR_REST}"`
 GreenOK=`echo -en "${COLOR_GREEN}--> OK${COLOR_REST}"`
 RedFAIL=`echo -en "${COLOR_RED}--> Fail${COLOR_REST}"`
 # ==== OS version ====
@@ -25,16 +28,23 @@ if [ $SSHDC == 1 ];then
 echo "SSHD Ciphers Check " $GOK
 echo $SSHDCip 
 else
-echo "SSHD Ciphers Check " $RedFAIL "you must do"
-echo "echo \"Ciphers aes128-ctr,aes192-ctr,aes256-ctr\" >> /etc/ssh/sshd_config" 
+echo "SSHD Ciphers Check " $RedFAIL
+WORD="echo \"Ciphers aes128-ctr,aes192-ctr,aes256-ctr\" >> /etc/ssh/sshd_config" 
+YcanTRY="${COLOR_YELLOW}$WORD${COLOR_REST}"
+echo -en "$GrayDo : "
+echo -e $YcanTRY
 echo ''
 fi
 if [ $SSHDM == 1 ];then
 echo "SSHD Macs Check" $GOK
 echo $SSHDMac 
 else
-echo "SSHD Macs Check" $RedFAIL "you must do" 
-echo "echo \"MACs hmac-sha2-256,hmac-sha2-512\" >> /etc/ssh/sshd_config" 
+echo "SSHD Macs Check" $RedFAIL 
+WORD="echo \"MACs hmac-sha2-256,hmac-sha2-512\" >> /etc/ssh/sshd_config" 
+YcanTRY="${COLOR_YELLOW}$WORD${COLOR_REST}"
+echo -en "$GrayDo : "
+echo -e $YcanTRY
+echo ''
 fi
 
 # CR10S check
@@ -45,10 +55,14 @@ if [ $PCSCD2 == 1 ] ;then
 echo "Check OK" 
 echo $PCSCD 
 else
-echo "Check" $RedFAIL 
+echo "Check" $RedFAIL ↓
 echo $PCSCD 
-echo "you must do" 
-echo "sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd " 
+WORD="sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd "
+YcanTRY="${COLOR_YELLOW}$WORD${COLOR_REST}"
+echo -en "$GrayDo : "
+echo -e $YcanTRY
+echo ''
 fi
 
 echo " ==== check finish ==== " 
+exit 0
