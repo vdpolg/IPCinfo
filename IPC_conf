@@ -25,7 +25,7 @@ SSHDC=$(grep "Ciphers aes128-ctr,aes192-ctr,aes256-ctr" /etc/ssh/sshd_config|wc 
 SSHDM=$(grep "MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config|wc -l) 
 echo " ==== SSHD Ciphers CHECK ==== " 
 if [ $SSHDC == 1 ];then
-echo "SSHD Ciphers Check " $GOK
+echo "SSHD Ciphers Check " $GreenOK
 echo $SSHDCip 
 else
 echo "SSHD Ciphers Check " $RedFAIL
@@ -36,7 +36,7 @@ echo -e $YcanTRY
 echo ''
 fi
 if [ $SSHDM == 1 ];then
-echo "SSHD Macs Check" $GOK
+echo "SSHD Macs Check" $GreenOK
 echo $SSHDMac 
 else
 echo "SSHD Macs Check" $RedFAIL 
@@ -52,7 +52,7 @@ echo " ==== CR10S check ==== "
 PCSCD=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd)
 PCSCD2=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd|wc -l)
 if [ $PCSCD2 == 1 ] ;then
-echo "Check OK" 
+echo "PCSCD Check" $GreenOK
 echo $PCSCD 
 else
 echo "Check" $RedFAIL ↓
