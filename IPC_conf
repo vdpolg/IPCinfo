@@ -3,8 +3,10 @@ COLOR_REST='\e[0m'
 COLOR_GREEN='\e[32m';
 COLOR_RED='\e[31m';
 COLOR_GRAY='\e[90m';
+COLOR_HIGHLIGHT='\e[30;47m';
 COLOR_YELLOW='\e[33m';
-GrayDo=`echo -en "${COLOR_GRAY}You must do${COLOR_REST}"`
+#GrayDo=`echo -en "${COLOR_GRAY}You must do${COLOR_REST}"`
+GrayDo=`echo -en "${COLOR_HIGHLIGHT}You must do${COLOR_REST}"`
 GreenOK=`echo -en "${COLOR_GREEN}--> OK${COLOR_REST}"`
 RedFAIL=`echo -en "${COLOR_RED}--> Fail${COLOR_REST}"`
 # ==== OS version ====
