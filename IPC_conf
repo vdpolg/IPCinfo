@@ -17,9 +17,13 @@ echo " == lsblk"
 lsblk 
 echo " == df -Th" 
 df -Th 
-echo " == cat /proc/mdstat" 
+echo " == cat /proc/mdstat ==" 
+if [ -f /proc/mdstat ] ;then
 cat /proc/mdstat  
-
+else
+WORD="There is no mdstat data"
+echo -e "${COLOR_RED}$WORD${COLOR_REST} \n"
+fi
 # SSHD check
 SSHDCip=$(grep "Ciphers" /etc/ssh/sshd_config) 
 SSHDMac=$(grep "MACs" /etc/ssh/sshd_config) 
@@ -63,13 +67,12 @@ echo $PCSCD
 WORD="sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd "
 YcanTRY="${COLOR_YELLOW}$WORD${COLOR_REST}"
 echo -en "$GrayDo : "
-echo -e $YcanTRY
-echo ''
+echo -e $YcanTRY \n
 fi
 else
 WORD="PCSCD not install"
-echo -e "${COLOR_RED}$WORD${COLOR_REST}"
+echo -e "${COLOR_RED}$WORD${COLOR_REST} \n"
 fi
 
-echo " ==== check finish ==== " 
+echo -e " ==== check finish ==== \n" 
 exit 0
