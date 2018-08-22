@@ -11,8 +11,9 @@ IPC檢核
 20180811            另拉branch,直接在CONSOLE SHOW (含色彩)不再產出檔案
 20180815            加顏色(fail後的建議為yellow)
 20180816            fix GreenOK
-# 待辦：首次使用環境建立、防呆(mkdir -p /sources/software)、跨平台
-# color ok -> 綠色 、 fail -> 紅色 、 you must do  ->灰和黃色
+20180822            Gray change HighLight (you must do變亮了)
+		    Pcscd check 
+# 待辦：首次使用環境建立、防呆(mkdir -p /sources/software)、pcscd檔判別、跨平台
 # 不限定folder : IPC_conf 本地執行
 
 # 設定檔路徑
