@@ -5,7 +5,17 @@ COLOR_RED='\e[31m';
 COLOR_GRAY='\e[90m';
 COLOR_HIGHLIGHT='\e[30;47m';
 COLOR_YELLOW='\e[33m';
-#GrayDo=`echo -en "${COLOR_GRAY}You must do${COLOR_REST}"`
+function CPC(){ #Check Pcscd Conf
+grep "PCSCD_OPTIONS=--critical$" /etc/rc.d/init.d/pcscd
+}
+function HLD(){ #Hight Light Do
+YcanTRY="${COLOR_YELLOW}$WORD${COLOR_REST}"
+echo -en "$HighLightDo : "
+echo -e "$YcanTRY \n"
+}
+function REDC(){ #RED Color
+echo -e "${COLOR_RED}$WORD${COLOR_REST} \n"
+}
 HighLightDo=`echo -en "${COLOR_HIGHLIGHT}You must do${COLOR_REST}"`
 GreenOK=`echo -en "${COLOR_GREEN}--> OK${COLOR_REST}"`
 RedFAIL=`echo -en "${COLOR_RED}--> Fail${COLOR_REST}"`
@@ -22,7 +32,7 @@ if [ -f /proc/mdstat ] ;then
 cat /proc/mdstat  
 else
 WORD="There is no mdstat data"
-echo -e "${COLOR_RED}$WORD${COLOR_REST} \n"
+REDC
 fi
 # SSHD check
 SSHDCip=$(grep "Ciphers" /etc/ssh/sshd_config) 
@@ -35,43 +45,42 @@ echo "SSHD Ciphers Check " $GreenOK
 echo $SSHDCip 
 else
 echo "SSHD Ciphers Check " $RedFAIL
-WORD="echo \"Ciphers aes128-ctr,aes192-ctr,aes256-ctr\" >> /etc/ssh/sshd_config" 
-YcanTRY="${COLOR_YELLOW}$WORD${COLOR_REST}"
-echo -en "$HighLightDo : "
-echo -e $YcanTRY
+echo '    Ciphers status    '
+grep Ciphers /etc/ssh/sshd_config
 echo ''
+WORD="echo \"Ciphers aes128-ctr,aes192-ctr,aes256-ctr\" >> /etc/ssh/sshd_config" 
+HLD
+echo -e '       Or Remove duplicates \n'
 fi
 if [ $SSHDM == 1 ];then
 echo "SSHD Macs Check" $GreenOK
 echo $SSHDMac 
 else
-echo "SSHD Macs Check" $RedFAIL 
-WORD="echo \"MACs hmac-sha2-256,hmac-sha2-512\" >> /etc/ssh/sshd_config" 
-YcanTRY="${COLOR_YELLOW}$WORD${COLOR_REST}"
-echo -en "$HighLightDo : "
-echo -e $YcanTRY
+echo "SSHD MACs Check" $RedFAIL 
+echo '    MACs status    '
+grep MACs /etc/ssh/sshd_config
 echo ''
+WORD="echo \"MACs hmac-sha2-256,hmac-sha2-512\" >> /etc/ssh/sshd_config" 
+HLD
+echo -e '       Or Remove duplicates \n'
 fi
 
 # CR10S check
 echo " ==== CR10S check ==== "
 if [[ -f /etc/rc.d/init.d/pcscd ]] ;then
-PCSCD=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd)
-PCSCD2=$(grep "PCSCD_OPTIONS=--critical" /etc/rc.d/init.d/pcscd|wc -l)
-if [ $PCSCD2 == 1 ] ;then
-echo "PCSCD Check" $GreenOK
-echo $PCSCD
+PCSCD2=$(CPC|wc -l)
+	if [ $PCSCD2 == 1 ] ;then
+		echo "PCSCD Check" $GreenOK
+		CPC
+	else
+		echo "Check" $RedFAIL ↓
+		grep "PCSCD_OPTIONS=" /etc/rc.d/init.d/pcscd
+		WORD="sed -i 's/PCSCD_OPTIONS=.*$/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd"
+		HLD
+	fi
 else
-echo "Check" $RedFAIL ↓
-echo $PCSCD
-WORD="sed -i 's/PCSCD_OPTIONS=/PCSCD_OPTIONS=--critical/g' /etc/rc.d/init.d/pcscd "
-YcanTRY="${COLOR_YELLOW}$WORD${COLOR_REST}"
-echo -en "$GrayDo : "
-echo -e $YcanTRY \n
-fi
-else
-WORD="PCSCD not install"
-echo -e "${COLOR_RED}$WORD${COLOR_REST} \n"
+	WORD="PCSCD not install"
+  REDC
 fi
 
 echo -e " ==== check finish ==== \n" 
