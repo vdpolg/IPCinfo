@@ -13,6 +13,7 @@ IPC檢核
 20180816 	fix GreenOK                                   
 20180822	Gray change HighLight (you must do變亮了)     
 20180921	改善PCSCD、SSHD防呆, 調整function HightLightDo 、REDC 
+20181222	df PTh 改善 df 排版，新增 -P 參數
 # 待辦：首次使用環境建立、防呆(mkdir -p /sources/software)
 # 不限定folder : IPC_conf 本地執行
 

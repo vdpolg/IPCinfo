@@ -25,8 +25,8 @@ uname -a
 echo " ==== Disk information ==== " 
 echo " == lsblk" 
 lsblk 
-echo " == df -Th" 
-df -Th 
+echo " == df -PTh" 
+df -PTh 
 echo " == cat /proc/mdstat ==" 
 if [ -f /proc/mdstat ] ;then
 cat /proc/mdstat  
